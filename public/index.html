@@ -16,6 +16,7 @@
 
 		var timer;
 		var count = 1;
+		var customer = 'demo';
 
 		$(document).ready(function() {
 			timer = $.timer(refresh);
@@ -25,41 +26,36 @@
 		function refresh(){
 			if(count === 0){
 				count = 2;
-				$(document.getElementById('demoSVG').contentDocument)
+				$.get('/services/'+customer)
+				.success(function(data, status, obj){
+					$(document.getElementById('demoSVG').contentDocument)
 					.find('desc')
 					.each(function(index, element){
-						perform_query($(element.firstChild).text(),element.parentElement.id);	
+						var id = $(element.firstChild).text();
+						apply_status(element.parentElement.id, status_color(data[id]), '#000000');
 					});
+				})
+				.error(function(obj, status, error){
+					status = {};
+				});
 			}else{
 				count -= 1;
 			}
-
-			var doc = $(document.getElementById('demoSVG').contentDocument).
-							find("#counter").
-							text(count);
-		}
-
-		function perform_query(resource,id){
-			$.get('/services/'+resource)
-				.success(function(data, status, obj){
-					apply_status(id, status_color(data), '#000000');
-				})
-				.error(function(obj, status, error){
-					apply_status(id, status_color(status), '#000000');	
-				})
 		}
 
 		function status_color(status){
-			if(/PASS/.test(status)){
-				return '#6DB370';
-			}else if(/FAIL/.test(status)){
-				return '#FF625F';
-			}else if(/WARN/.test(status)){
-				return '#FEBD01';
-			}else if(/CRITICAL/.test(status)){
-				return '#465866';
-			}else if(/PAUSE/.test(status)){
-				return '#2AC8E8';
+			if(status){
+				if(/PASS/.test(status)){
+					return '#6DB370';
+				}else if(/FAIL/.test(status)){
+					return '#FF625F';
+				}else if(/WARN/.test(status)){
+					return '#FEBD01';
+				}else if(/CRITICAL/.test(status)){
+					return '#465866';
+				}else if(/PAUSE/.test(status)){
+					return '#2AC8E8';
+				}
 			}
 			return '#666666';
 		}

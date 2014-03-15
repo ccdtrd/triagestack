@@ -1,0 +1,127 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', '-g', 'watch' ]
+2 info using npm@1.3.11
+3 info using node@v0.10.20
+4 verbose cache add [ 'watch', null ]
+5 verbose cache add name=undefined spec="watch" args=["watch",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'watch',
+6 verbose parsed url   path: 'watch',
+6 verbose parsed url   href: 'watch' }
+7 silly lockFile 292b0901-watch watch
+8 verbose lock watch /Users/cjnicho/.npm/292b0901-watch.lock
+9 silly lockFile 292b0901-watch watch
+10 silly lockFile 292b0901-watch watch
+11 verbose addNamed [ 'watch', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile af45c107-watch watch@
+14 verbose lock watch@ /Users/cjnicho/.npm/af45c107-watch.lock
+15 silly addNameRange { name: 'watch', range: '*', hasData: false }
+16 verbose url raw watch
+17 verbose url resolving [ 'https://registry.npmjs.org/', './watch' ]
+18 verbose url resolved https://registry.npmjs.org/watch
+19 info trying registry request attempt 1 at 20:19:26
+20 verbose etag "KNQO3O1CPW5VETSFHVCL7E93"
+21 http GET https://registry.npmjs.org/watch
+22 http 304 https://registry.npmjs.org/watch
+23 silly registry.get cb [ 304,
+23 silly registry.get   { date: 'Sat, 15 Mar 2014 00:19:14 GMT',
+23 silly registry.get     server: 'Apache',
+23 silly registry.get     via: '1.1 varnish',
+23 silly registry.get     'last-modified': 'Sat, 15 Mar 2014 00:19:14 GMT',
+23 silly registry.get     'cache-control': 'max-age=1',
+23 silly registry.get     etag: '"KNQO3O1CPW5VETSFHVCL7E93"',
+23 silly registry.get     'x-served-by': 'cache-jfk1021-JFK',
+23 silly registry.get     'x-cache': 'HIT',
+23 silly registry.get     'x-cache-hits': '1',
+23 silly registry.get     'x-timer': 'S1394842754.937978506,VS0,VE8',
+23 silly registry.get     vary: 'Accept',
+23 silly registry.get     'content-length': '0',
+23 silly registry.get     'keep-alive': 'timeout=10, max=50',
+23 silly registry.get     connection: 'Keep-Alive' } ]
+24 verbose etag watch from cache
+25 silly addNameRange number 2 { name: 'watch', range: '*', hasData: true }
+26 silly addNameRange versions [ 'watch',
+26 silly addNameRange   [ '0.1.0',
+26 silly addNameRange     '0.2.0',
+26 silly addNameRange     '0.2.1',
+26 silly addNameRange     '0.3.0',
+26 silly addNameRange     '0.3.1',
+26 silly addNameRange     '0.3.2',
+26 silly addNameRange     '0.3.3',
+26 silly addNameRange     '0.4.0',
+26 silly addNameRange     '0.5.0',
+26 silly addNameRange     '0.5.1',
+26 silly addNameRange     '0.6.0',
+26 silly addNameRange     '0.7.0',
+26 silly addNameRange     '0.8.0',
+26 silly addNameRange     '0.9.0' ] ]
+27 verbose addNamed [ 'watch', '0.9.0' ]
+28 verbose addNamed [ '0.9.0', '0.9.0' ]
+29 silly lockFile bcdc5b8f-watch-0-9-0 watch@0.9.0
+30 verbose lock watch@0.9.0 /Users/cjnicho/.npm/bcdc5b8f-watch-0-9-0.lock
+31 silly lockFile bcdc5b8f-watch-0-9-0 watch@0.9.0
+32 silly lockFile bcdc5b8f-watch-0-9-0 watch@0.9.0
+33 silly lockFile af45c107-watch watch@
+34 silly lockFile af45c107-watch watch@
+35 silly resolved [ { name: 'watch',
+35 silly resolved     description: 'Utilities for watching file trees.',
+35 silly resolved     tags: [ 'util', 'utility', 'fs', 'files' ],
+35 silly resolved     version: '0.9.0',
+35 silly resolved     homepage: 'https://github.com/mikeal/watch',
+35 silly resolved     bugs: { url: 'https://github.com/mikeal/watch/issues' },
+35 silly resolved     repository: { type: 'git', url: 'git://github.com/mikeal/watch.git' },
+35 silly resolved     author: { name: 'Mikeal Rogers', email: 'mikeal.rogers@gmail.com' },
+35 silly resolved     directories: { lib: 'lib' },
+35 silly resolved     engines: [ 'node >=0.1.95' ],
+35 silly resolved     main: './main',
+35 silly resolved     readme: '# watch -- Utilities for watching file trees in node.js\n\n## Install\n\n<pre>\n  npm install watch\n</pre>\n\n## Purpose\n\nThe intention of this module is provide tools that make managing the watching of file & directory trees easier.\n\n#### watch.watchTree(root, [options,] callback)\n\nThe first argument is the directory root you want to watch.\n\nThe options object is passed to fs.watchFile but can also be used to provide two additional watchTree specific options:\n\n* `\'ignoreDotFiles\'` - When true this option means that when the file tree is walked it will ignore files that being with "."\n* `\'filter\'` - You can use this option to provide a function that returns true or false for each file and directory that is walked to decide whether or not that file/directory is included in the watcher.\n\nThe callback takes 3 arguments. The first is the file that was modified. The second is the current stat object for that file and the third is the previous stat object.\n\nWhen a file is new the previous stat object is null.\n\nWhen watchTree is finished walking the tree and adding all the listeners it passes the file hash (keys are the file/directory names and the values are the current stat objects) as the first argument and null as both the previous and current stat object arguments.\n\n<pre>\n  watch.watchTree(\'/home/mikeal\', function (f, curr, prev) {\n    if (typeof f == "object" && prev === null && curr === null) {\n      // Finished walking the tree\n    } else if (prev === null) {\n      // f is a new file\n    } else if (curr.nlink === 0) {\n      // f was removed\n    } else {\n      // f was changed\n    }\n  })\n</pre>\n\n### watch.createMonitor(root, [options,] callback)\n\nThis function creates an EventEmitter that gives notifications for different changes that happen to the file and directory tree under the given root argument.\n\nThe options object is passed to watch.watchTree.\n\nThe callback receives the monitor object.\n\nThe monitor object contains a property, `files`, which is a hash of files and directories as keys with the current stat object as the value.\n\nThe monitor has the following events.\n\n* `\'created\'` - New file has been created. Two arguments, the filename and the stat object.\n* `\'removed\'` - A file has been moved or deleted. Two arguments, the filename and the stat object for the fd.\n* `\'changed\'` - A file has been changed. Three arguments, the filename, the current stat object, and the previous stat object.\n\n<pre>\n  var watch = require(\'watch\')\n  watch.createMonitor(\'/home/mikeal\', function (monitor) {\n    monitor.files[\'/home/mikeal/.zshrc\'] // Stat object for my zshrc.\n    monitor.on("created", function (f, stat) {\n      // Handle new files\n    })\n    monitor.on("changed", function (f, curr, prev) {\n      // Handle file changes\n    })\n    monitor.on("removed", function (f, stat) {\n      // Handle removed files\n    })\n  })\n</pre>\n',
+35 silly resolved     readmeFilename: 'readme.mkd',
+35 silly resolved     _id: 'watch@0.9.0',
+35 silly resolved     _from: 'watch@' } ]
+36 info install watch@0.9.0 into /usr/local/lib
+37 info installOne watch@0.9.0
+38 info /usr/local/lib/node_modules/watch unbuild
+39 verbose tar unpack /Users/cjnicho/.npm/watch/0.9.0/package.tgz
+40 silly lockFile 94c3f599-usr-local-lib-node-modules-watch tar:///usr/local/lib/node_modules/watch
+41 verbose lock tar:///usr/local/lib/node_modules/watch /Users/cjnicho/.npm/94c3f599-usr-local-lib-node-modules-watch.lock
+42 silly lockFile 6dc6caec-icho-npm-watch-0-9-0-package-tgz tar:///Users/cjnicho/.npm/watch/0.9.0/package.tgz
+43 verbose lock tar:///Users/cjnicho/.npm/watch/0.9.0/package.tgz /Users/cjnicho/.npm/6dc6caec-icho-npm-watch-0-9-0-package-tgz.lock
+44 silly gunzTarPerm modes [ '755', '644' ]
+45 error Error: EACCES, mkdir '/usr/local/lib/node_modules/watch'
+45 error  { [Error: EACCES, mkdir '/usr/local/lib/node_modules/watch']
+45 error   errno: 3,
+45 error   code: 'EACCES',
+45 error   path: '/usr/local/lib/node_modules/watch',
+45 error   fstream_type: 'Directory',
+45 error   fstream_path: '/usr/local/lib/node_modules/watch',
+45 error   fstream_class: 'DirWriter',
+45 error   fstream_stack:
+45 error    [ '/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23',
+45 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:37:53',
+45 error      'Object.oncomplete (fs.js:107:15)' ] }
+46 error Please try running this command again as root/Administrator.
+47 error System Darwin 12.5.0
+48 error command "node" "/usr/local/bin/npm" "install" "-g" "watch"
+49 error cwd /Users/cjnicho/Documents/triagestack
+50 error node -v v0.10.20
+51 error npm -v 1.3.11
+52 error path /usr/local/lib/node_modules/watch
+53 error fstream_path /usr/local/lib/node_modules/watch
+54 error fstream_type Directory
+55 error fstream_class DirWriter
+56 error code EACCES
+57 error errno 3
+58 error stack Error: EACCES, mkdir '/usr/local/lib/node_modules/watch'
+59 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23
+59 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:37:53
+59 error fstream_stack Object.oncomplete (fs.js:107:15)
+60 verbose exit [ 3, true ]

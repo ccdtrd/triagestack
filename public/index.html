@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<style type="text/css" media="screen">
+	    body { background:#eee; margin:0 }
+	    object {
+	      display:block; border:1px solid #ccc; position:absolute;
+	      top:5%; left:5%; width:90%; height:90%; background:#fff;
+	    }
+	    .face { stroke:#000; stroke-width:20px; stroke-linecap:round }
+	  </style>
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>	
+	<script type="text/javascript" src="js/jquery.timer.js"></script>
+	<script type="text/javascript">
+
+		var timer;
+		var count = 1;
+
+		$(document).ready(function() {
+			timer = $.timer(refresh);
+			timer.set({ time : 1000, autostart : true });
+		});
+
+		function refresh(){
+			if(count === 0){
+				count = 2;
+				$(document.getElementById('demoSVG').contentDocument)
+					.find('desc')
+					.each(function(index, element){
+						perform_query($(element.firstChild).text(),element.parentElement.id);	
+					});
+			}else{
+				count -= 1;
+			}
+
+			var doc = $(document.getElementById('demoSVG').contentDocument).
+							find("#counter").
+							text(count);
+		}
+
+		function perform_query(resource,id){
+			$.get('/services/'+resource)
+				.success(function(data, status, obj){
+					apply_status(id, status_color(data), '#000000');
+				})
+				.error(function(obj, status, error){
+					apply_status(id, status_color(status), '#000000');	
+				})
+		}
+
+		function status_color(status){
+			if(/PASS/.test(status)){
+				return '#6DB370';
+			}else if(/FAIL/.test(status)){
+				return '#FF625F';
+			}else if(/WARN/.test(status)){
+				return '#FEBD01';
+			}else if(/CRITICAL/.test(status)){
+				return '#465866';
+			}else if(/PAUSE/.test(status)){
+				return '#2AC8E8';
+			}
+			return '#666666';
+		}
+
+		function apply_status(id, fill, stroke) {
+		  var doc = document.getElementById('demoSVG').contentDocument;
+		  var circle = doc.getElementById(id);
+		  circle.style.fill = fill;
+		  // circle.style.strokeWidth = "2";
+		  // circle.style.stroke = stroke;
+		}
+
+	</script>
+</head>
+<body>
+	<!--[if !IE]>-->
+	  <object data="umts_network_architecture.svg" type="image/svg+xml" id="demoSVG"> 
+	<!--<![endif]-->
+</body>

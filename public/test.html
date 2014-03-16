@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>CloudGuard - Triage</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom Google Web Font -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+
+    <!-- Add custom CSS here -->
+    <link href="css/landing-page.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Triage</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#flow">Flow</a></li>
+                    <li><a href="#console">Console</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div class="intro-header">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-message">
+                          <object data="umts_network_architecture.svg" type="image/svg+xml" id="demoSVG"></object>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.intro-header -->
+
+    <div id="console" class="content-section-a">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">Flow
+                        <br>See what's really going on</h2>
+                    <p class="lead">Visualize mission critical components in a way that makes sense to you.  Elevate your monitoring from lists to visual depictions to the current the state of enterprise.  Roll up complexity and target different end users of the system with different views.</p>
+                </div>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                    <img class="img-responsive" src="img/kraken-dataflow-ipad.png" alt="">
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-a -->
+
+    <div class="banner">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2>Connect to Start CloudGuard℞:</h2>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="list-inline banner-social-buttons">
+                        <li><a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                        </li>
+                        <li><a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                        </li>
+                        <li><a href="#" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">Linkedin</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.banner -->
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list-inline">
+                        <li><a href="#home">Home</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li><a href="#about">About</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li><a href="#services">Services</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li><a href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted small">Copyright &copy; CloudGuard℞ 2014. All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/jquery.timer.js"></script>
+    <script type="text/javascript">
+
+        var timer;
+        var count = 1;
+        var customer = 'demo';
+
+        $(document).ready(function() {
+            timer = $.timer(refresh);
+            timer.set({ time : 1000, autostart : true });
+        });
+
+        function refresh(){
+            if(count === 0){
+                count = 2;
+                $.get('/services/'+customer+'/_all')
+                .success(function(data, status, obj){
+                    $(document.getElementById('demoSVG').contentDocument)
+                    .find('desc')
+                    .each(function(index, element){
+                        var id = $(element.firstChild).text();
+                        apply_status(element.parentElement.id, status_color(data[id+':status']), '#000000');
+                    });
+                })
+                .error(function(obj, status, error){
+                    status = {};
+                });
+            }else{
+                count -= 1;
+            }
+        }
+
+        function status_color(status){
+            if(status){
+                if(/PASS/.test(status)){
+                    return '#6DB370';
+                }else if(/FAIL/.test(status)){
+                    return '#FF625F';
+                }else if(/WARN/.test(status)){
+                    return '#FEBD01';
+                }else if(/CRITICAL/.test(status)){
+                    return '#465866';
+                }else if(/PAUSE/.test(status)){
+                    return '#2AC8E8';
+                }
+            }
+            return '#666666';
+        }
+
+        function apply_status(id, fill, stroke) {
+          var doc = document.getElementById('demoSVG').contentDocument;
+          var circle = doc.getElementById(id);
+          circle.style.fill = fill;
+          // circle.style.strokeWidth = "2";
+          // circle.style.stroke = stroke;
+        }
+
+    </script>
+
+</body>
+
+</html>

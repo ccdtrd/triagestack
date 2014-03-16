@@ -1,0 +1,23 @@
+<div ng-controller="ConsoleCtrl" ng-init="init()" class="content-section-a">
+
+    <div class="container">
+        <div class="row">
+        	<table class="table">
+        		<thead>
+        			<te><th>Name</th><th>Status</th><th>Last</th><th>Count</th></tr>
+    			</thead>
+        		<tbody ng-repeat="component in components">
+        			<tr>
+    					<td>{{component.name}}</td>
+    					<td>{{component.status}}</td>
+    					<td>{{component.last}}</td>
+    					<td>{{component.count}}</td>
+        			</tr>
+        		</tbody>
+			</table>
+        </div>
+    </div>
+    <!-- /.container -->
+
+</div>
+<!-- /.intro-header -->

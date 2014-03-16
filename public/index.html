@@ -26,13 +26,13 @@
 		function refresh(){
 			if(count === 0){
 				count = 2;
-				$.get('/services/'+customer)
+				$.get('/services/'+customer+'/_all')
 				.success(function(data, status, obj){
 					$(document.getElementById('demoSVG').contentDocument)
 					.find('desc')
 					.each(function(index, element){
 						var id = $(element.firstChild).text();
-						apply_status(element.parentElement.id, status_color(data[id]), '#000000');
+						apply_status(element.parentElement.id, status_color(data[id+':status']), '#000000');
 					});
 				})
 				.error(function(obj, status, error){

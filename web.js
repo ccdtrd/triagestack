@@ -3,6 +3,8 @@ var express = require("express");
 var logfmt = require("logfmt");
 var app = express();
 
+var _ = require("underscore");
+
 var redis = require("redis"),
 	client = redis.createClient('12695','pub-redis-12695.us-east-1-2.3.ec2.garantiadata.com');
 client.auth('password', function(){});
@@ -16,44 +18,58 @@ var status = [];
 
 app.use(logfmt.requestLogger());
 
-app.get('/services/:customer/:id/:status', function(req, res) {
-	client.hset(req.params.customer,req.params.id, req.params.status, redis.print);
-	res.send({error: false});
-});
-
-app.get('/services/:customer/:id', function(req, res) {
+app.get('/services/:customer/:component/:status', function(req, res) {
 	var customer = req.params.customer;
-	var id = req.params.id;
+	var component = req.params.component;
+	var status = req.params.status;
+	var time = new Date();
 
-	client.hget(customer, id, function(err, reply){
-		if(err){
-			console.log(err);
-			res.send({error: true});
-		}else{
-			if(reply){
-				res.send({error: false, id: reply});
-			}else{
-				res.send({error: false, id: 'UNKNOWN'});
-			}
-		}
+	// client.del(customer + ':_all');
+	// client.del(customer +':_components');
+
+	var store = {};
+	store[component+':name'] = component;
+	store[component+':status'] = status;
+	store[component+':last'] = time;
+
+	client.sadd(customer + ':_all', component);
+	client.hget(customer + ':_components', component+":status", function(err, reply){
+		if(reply !== status){ store[component+':count'] = 0; }
+		else{ client.hincrby(customer + ':_components', component+':count', 1); }
+		client.hmset(customer +':_components', store, redis.print);
 	});
+	res.send('ok');
+
 });
 
-app.get('/services/:customer', function(req, res) {
+app.get('/services/:customer/_all', function(req, res) {
 	var customer = req.params.customer;
+	client.smembers(customer+':_all', function(err, reply){
+		var names = [];
+		_.each(reply,function(name){
+			names.push(name+':status');
+			names.push(name+':last');
+			names.push(name+':count');
+		});
 
-	client.hgetall(customer, function(err, reply){
-		if(err){
-			console.log(err);
-			res.send({error: true});
-		}
-		reply.error = false;
-		res.send(reply);
+		client.hmget(customer+':_components', names, function(err, creply){
+			var response = [];
+			for(var i=0;i<reply.length;i+=3){
+				var component = {
+					name: reply[i],
+					status: creply[i],
+					last: creply[i+1],
+					count: creply[i+2]
+				};
+				response.push(component); 
+			}
+			res.send(response);
+		});
 	});
 });
 
 app.configure(function(){
-  app.use('/', express.static(process.env.PWD + '/public'));
+  app.use('/', express.static(process.env.PWD + '/app'));
 });
 
 var port = Number(process.env.PORT || 5000);

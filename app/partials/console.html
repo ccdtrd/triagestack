@@ -1,23 +1,17 @@
-<div ng-controller="ConsoleCtrl" ng-init="init()" class="content-section-a">
-
-    <div class="container">
-        <div class="row">
-        	<table class="table">
-        		<thead>
-        			<te><th>Name</th><th>Status</th><th>Last</th><th>Count</th></tr>
-    			</thead>
-        		<tbody ng-repeat="component in components">
-        			<tr>
-    					<td>{{component.name}}</td>
-    					<td>{{component.status}}</td>
-    					<td>{{component.last}}</td>
-    					<td>{{component.count}}</td>
-        			</tr>
-        		</tbody>
-			</table>
-        </div>
+<div ng-controller="ConsoleCtrl" ng-init="init()" style="margin-bottom: 25px; margin-top: 60px;">
+  <div class="container">
+    <div class="row" style="margin-bottom: 25px;">
+      <div class="col-xs-12 enterprise-PASS">
+        <span class="name">Enterprise Status</span>
+        <span class="pull-right">Fully Operational</span>
+      </div>
     </div>
-    <!-- /.container -->
-
+    <div class="row" ng-repeat="component in components">
+      <div class="col-xs-12">
+        <span class="name">{{component.name}}</span>
+        <span class="pull-right color-{{component.status}}">{{component.status}}</span>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- /.intro-header -->

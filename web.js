@@ -18,14 +18,19 @@ var status = [];
 
 app.use(logfmt.requestLogger());
 
+app.get('/services/:customer/_del', function(req, res) {
+	var customer = req.params.customer;
+
+	client.del(customer + ':_all');
+	client.del(customer +':_components');
+	res.send('ok');
+});
+
 app.get('/services/:customer/:component/:status', function(req, res) {
 	var customer = req.params.customer;
 	var component = req.params.component;
 	var status = req.params.status;
 	var time = new Date();
-
-	// client.del(customer + ':_all');
-	// client.del(customer +':_components');
 
 	var store = {};
 	store[component+':name'] = component;
@@ -47,19 +52,19 @@ app.get('/services/:customer/_all', function(req, res) {
 	client.smembers(customer+':_all', function(err, reply){
 		var names = [];
 		_.each(reply,function(name){
+			names.push(name+':name');
 			names.push(name+':status');
 			names.push(name+':last');
 			names.push(name+':count');
 		});
-
 		client.hmget(customer+':_components', names, function(err, creply){
 			var response = [];
-			for(var i=0;i<reply.length;i+=3){
+			for(var i=0;i<creply.length;i+=4){
 				var component = {
-					name: reply[i],
-					status: creply[i],
-					last: creply[i+1],
-					count: creply[i+2]
+					name: creply[i],
+					status: creply[i+1],
+					last: creply[i+2],
+					count: creply[i+3]
 				};
 				response.push(component); 
 			}

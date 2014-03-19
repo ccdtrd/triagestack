@@ -15,7 +15,7 @@ body, h1, h2, h3, h4, h5, h6 {
 
 object {
   display:block; position:absolute;
-  top:5%; left:2%; width:95%; height:95%; background:#fff;
+  top:50px; left:2%; width:95%; height:95%; background:#fff;
 }
 
 
@@ -79,17 +79,6 @@ object {
 	font-size: 14px;
 	font-weight: 400;
 	letter-spacing: 2px;
-}
-
-.content-section-a {
-	background-color: #f8f8f8;
-	padding: 50px 0;
-}
-
-.content-section-b {
-	border-top: 1px solid #e7e7e7;
-	border-bottom: 1px solid #e7e7e7;
-	padding: 50px 0;
 }
 
 .section-heading {
@@ -156,4 +145,52 @@ footer {
 
 p.copyright {
 	margin: 15px 0 0;
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+h4 {
+  margin-top: 25px;
+}
+.row .row {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+[class*="col-"] {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  /*background-color: #eee;*/
+  /*background-color: rgba(86,61,124,.15);*/
+  border: 1px solid #ddd;
+  border: 1px solid rgba(86,61,124,.2);
+}
+
+hr {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.color-PASS {
+	color: #338799;
+}
+.color-PASS {
+	color: #6DB370;
+}
+.color-FAIL {
+	color: #FF625F;
+}
+.color-WARN {
+	color: #6DB370;
+}
+.enterprise-PASS {
+	background-color: #6DB370;
+}
+.color-CRITICAL {
+	color: #465866;
+}
+.color-PAUSE {
+	color: #2AC8E8;
 }

@@ -15,12 +15,12 @@ angular.module('triage.controllers', []).
   		console.log('ConsoleCtrl.init');
   		TriageService.getAllComponents()
 			.success(function(data, status){
-				$scope.components = data;
+        $scope.enterprise = _.last(data);
+				$scope.components = data.slice(0,data.length-1);
 			})
 			.error(function(data, status){
 				console.log(data);
 			})
-
   	}
 
   }]);

@@ -68,10 +68,48 @@ app.get('/services/:customer/_all', function(req, res) {
 				};
 				response.push(component); 
 			}
+			var enterprise = _.reduce(response, function(memo, component){
+				if(memo < getIntFromStatus(component.status)){
+					return getIntFromStatus(component.status);
+				}else{
+					return memo;
+				}
+			}, 0);
+			response.push({
+					name: '_all',
+					status: getStatusFromInt(enterprise)
+				});
 			res.send(response);
 		});
 	});
 });
+
+function getIntFromStatus(status){
+	if(/PASS/.test(status)){
+        return 0;
+    }else if(/WARN/.test(status)){
+        return 1;
+    }else if(/FAIL/.test(status)){
+        return 2;
+    }else if(/CRITICAL/.test(status)){
+        return 3;
+    }else if(/PAUSE/.test(status)){
+        return 0;
+    }
+}
+
+function getStatusFromInt(status){
+	if(status === 0){
+		return 'PASS';
+	}else if(status === 1){
+		return 'WARN';
+	}else if(status === 2){
+		return 'FAIL'
+	}else if(status === 3){
+		return 'CRITICAL'
+	}
+	return 'UNKNOWN';
+}
 
 app.configure(function(){
   app.use('/', express.static(process.env.PWD + '/app'));

@@ -1,9 +1,9 @@
 <div ng-controller="ConsoleCtrl" ng-init="init()" style="margin-bottom: 25px; margin-top: 60px;">
   <div class="container">
     <div class="row" style="margin-bottom: 25px;">
-      <div class="col-xs-12 enterprise-PASS">
+      <div class="col-xs-12 enterprise-{{enterprise.status}}">
         <span class="name">Enterprise Status</span>
-        <span class="pull-right">Fully Operational</span>
+        <span class="pull-right">{{enterprise.status}}</span>
       </div>
     </div>
     <div class="row" ng-repeat="component in components">

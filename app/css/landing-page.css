@@ -183,10 +183,13 @@ hr {
 	color: #FF625F;
 }
 .color-WARN {
-	color: #6DB370;
+	color: #FEBD01;
 }
 .enterprise-PASS {
 	background-color: #6DB370;
+}
+.enterprise-WARN {
+	background-color: #FEBD01;
 }
 .color-CRITICAL {
 	color: #465866;

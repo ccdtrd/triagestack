@@ -13,17 +13,11 @@ body, h1, h2, h3, h4, h5, h6 {
 	font-weight: 400;
 }
 
-object {
-  display:block; position:absolute;
-  top:50px; left:2%; width:95%; height:95%; background:#fff;
-}
-
-
 .intro-header {
 	padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
 	padding-bottom: 50px;
 	color: #f8f8f8;
-	/*background: url(../img/intro-bg.jpg) no-repeat center center;*/
+	background: url(../img/intro-bg.jpg) no-repeat center center;
 	background-size: cover;
 	text-align: center;
 }
@@ -79,6 +73,17 @@ object {
 	font-size: 14px;
 	font-weight: 400;
 	letter-spacing: 2px;
+}
+
+.content-section-a {
+	background-color: #f8f8f8;
+	padding: 50px 0;
+}
+
+.content-section-b {
+	border-top: 1px solid #e7e7e7;
+	border-bottom: 1px solid #e7e7e7;
+	padding: 50px 0;
 }
 
 .section-heading {
@@ -147,19 +152,16 @@ p.copyright {
 	margin: 15px 0 0;
 }
 
-.container {
-  padding-right: 15px;
-  padding-left: 15px;
-}
-
-h4 {
-  margin-top: 25px;
-}
 .row .row {
   margin-top: 10px;
   margin-bottom: 0;
 }
-[class*="col-"] {
+
+.console {
+
+}
+
+div.console > div.row > [class*="col-"] {
   padding-top: 15px;
   padding-bottom: 15px;
   /*background-color: #eee;*/
@@ -168,9 +170,9 @@ h4 {
   border: 1px solid rgba(86,61,124,.2);
 }
 
-hr {
-  margin-top: 40px;
-  margin-bottom: 40px;
+object {
+  display:block; position:absolute;
+  top:50px; left:2%; width:95%; height:95%; background:#fff;
 }
 
 .color-PASS {
@@ -190,6 +192,9 @@ hr {
 }
 .enterprise-WARN {
 	background-color: #FEBD01;
+}
+.enterprise-FAIL {
+	background-color: #FF625F;
 }
 .color-CRITICAL {
 	color: #465866;

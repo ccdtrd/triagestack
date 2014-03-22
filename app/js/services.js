@@ -13,7 +13,7 @@ angular.module('triage.services', [])
           components = data;
       },
       getAllComponents: function () {
-				return $http.get('services/demo/_all');
+				return $http.get('/services/demo/_all');
       }
     };
 	});

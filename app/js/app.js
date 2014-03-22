@@ -12,5 +12,8 @@ angular.module('triage', [
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/flow', {templateUrl: 'partials/flow.html'});
   $routeProvider.when('/console', {templateUrl: 'partials/console.html'});
-  $routeProvider.otherwise({redirectTo: '/flow'});
+  $routeProvider.when('/home', {templateUrl: 'partials/home.html'});
+  $routeProvider.when('/signin', {templateUrl: 'partials/signin.html'});
+  $routeProvider.when('/signup', {templateUrl: 'partials/signup.html'});
+  $routeProvider.otherwise({redirectTo: '/home'});
 }]);
